@@ -3,8 +3,6 @@ package com.victorello.yetanotherinternshipproject.mapper;
 import com.victorello.yetanotherinternshipproject.domain.AbstractEntity;
 import com.victorello.yetanotherinternshipproject.dto.AbstractDTO;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

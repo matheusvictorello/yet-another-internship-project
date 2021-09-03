@@ -1,8 +1,10 @@
 package com.victorello.yetanotherinternshipproject.mapper;
 
-import com.victorello.yetanotherinternshipproject.domain.*;
+import com.victorello.yetanotherinternshipproject.domain.AbstractEntity;
+import com.victorello.yetanotherinternshipproject.domain.Card;
+import com.victorello.yetanotherinternshipproject.domain.Project;
+import com.victorello.yetanotherinternshipproject.domain.Task;
 import com.victorello.yetanotherinternshipproject.dto.TaskDTO;
-import com.victorello.yetanotherinternshipproject.dto.UserDTO;
 import com.victorello.yetanotherinternshipproject.service.CardService;
 import com.victorello.yetanotherinternshipproject.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;

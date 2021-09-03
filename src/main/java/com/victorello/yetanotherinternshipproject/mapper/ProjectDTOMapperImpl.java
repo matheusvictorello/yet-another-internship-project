@@ -5,13 +5,15 @@ import com.victorello.yetanotherinternshipproject.domain.Project;
 import com.victorello.yetanotherinternshipproject.domain.Task;
 import com.victorello.yetanotherinternshipproject.domain.User;
 import com.victorello.yetanotherinternshipproject.dto.ProjectDTO;
-import com.victorello.yetanotherinternshipproject.dto.UserDTO;
 import com.victorello.yetanotherinternshipproject.service.TaskService;
 import com.victorello.yetanotherinternshipproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProjectDTOMapperImpl extends AbstractDTOMapperImpl<Project, ProjectDTO> implements ProjectDTOMapper{
