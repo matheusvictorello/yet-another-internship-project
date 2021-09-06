@@ -5,6 +5,7 @@ import com.victorello.yetanotherinternshipproject.domain.Card;
 import com.victorello.yetanotherinternshipproject.domain.Project;
 import com.victorello.yetanotherinternshipproject.domain.Task;
 import com.victorello.yetanotherinternshipproject.dto.TaskDTO;
+import com.victorello.yetanotherinternshipproject.mapper.exceptions.InvalidReferenceIdException;
 import com.victorello.yetanotherinternshipproject.service.CardService;
 import com.victorello.yetanotherinternshipproject.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,13 @@ public class TaskDTOMapperImpl extends AbstractDTOMapperImpl<Task, TaskDTO> impl
     @Override
     public Task fromDTO(TaskDTO dto) {
         Optional<Project> optionalProject = projectService.findById(dto.getProjectId());
-        if (optionalProject.isEmpty()) return null;
+        if (optionalProject.isEmpty()) throw new InvalidReferenceIdException();
         Project project = optionalProject.get();
 
         Set<Card> cardSet = new HashSet<>();
         for (Long id : dto.getCardIdList()) {
             Optional<Card> optionalCard = cardService.findById(id);
-            if (optionalCard.isEmpty()) return null;
+            if (optionalCard.isEmpty()) throw new InvalidReferenceIdException();
             cardSet.add(optionalCard.get());
         }
 

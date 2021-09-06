@@ -5,6 +5,7 @@ import com.victorello.yetanotherinternshipproject.domain.Project;
 import com.victorello.yetanotherinternshipproject.domain.Task;
 import com.victorello.yetanotherinternshipproject.domain.User;
 import com.victorello.yetanotherinternshipproject.dto.ProjectDTO;
+import com.victorello.yetanotherinternshipproject.mapper.exceptions.InvalidReferenceIdException;
 import com.victorello.yetanotherinternshipproject.service.TaskService;
 import com.victorello.yetanotherinternshipproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,13 @@ public class ProjectDTOMapperImpl extends AbstractDTOMapperImpl<Project, Project
     @Override
     public Project fromDTO(ProjectDTO dto) {
         Optional<User> optionalUser = userService.findById(dto.getOwnerId());
-        if (optionalUser.isEmpty()) return null;
+        if (optionalUser.isEmpty()) throw new InvalidReferenceIdException();
         User owner = optionalUser.get();
 
         Set<Task> taskSet = new HashSet<>();
         for (Long id : dto.getTaskIdList()) {
             Optional<Task> optionalTask = taskService.findById(id);
-            if (optionalTask.isEmpty()) {
-                return null;
-            }
+            if (optionalTask.isEmpty()) throw new InvalidReferenceIdException();
             taskSet.add(optionalTask.get());
         }
 

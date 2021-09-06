@@ -4,6 +4,7 @@ import com.victorello.yetanotherinternshipproject.domain.AbstractEntity;
 import com.victorello.yetanotherinternshipproject.domain.Project;
 import com.victorello.yetanotherinternshipproject.domain.User;
 import com.victorello.yetanotherinternshipproject.dto.UserDTO;
+import com.victorello.yetanotherinternshipproject.mapper.exceptions.InvalidReferenceIdException;
 import com.victorello.yetanotherinternshipproject.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class UserDTOMapperImpl extends AbstractDTOMapperImpl<User, UserDTO> impl
         Set<Project> projectSet = new HashSet<>();
         for (Long id : dto.getProjectIdList()) {
             Optional<Project> optionalProject = projectService.findById(id);
-            if (optionalProject.isEmpty()) return null;
+            if (optionalProject.isEmpty()) throw new InvalidReferenceIdException();
             projectSet.add(optionalProject.get());
         }
 

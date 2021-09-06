@@ -4,6 +4,7 @@ import com.victorello.yetanotherinternshipproject.dao.AbstractDAO;
 import com.victorello.yetanotherinternshipproject.domain.AbstractEntity;
 import com.victorello.yetanotherinternshipproject.dto.AbstractDTO;
 import com.victorello.yetanotherinternshipproject.mapper.AbstractDTOMapper;
+import com.victorello.yetanotherinternshipproject.mapper.exceptions.InvalidReferenceIdException;
 import com.victorello.yetanotherinternshipproject.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +54,7 @@ abstract public class AbstractRestController<
             service.save(t);
             dto = mapper.toDTO(t);
             return ResponseEntity.ok(dto);
-        } catch (ConstraintViolationException e) {
+        } catch (InvalidReferenceIdException | ConstraintViolationException e) {
             return ResponseEntity.unprocessableEntity().build();
         }
     }
@@ -66,7 +67,7 @@ abstract public class AbstractRestController<
             service.save(t);
             dto = mapper.toDTO(t);
             return ResponseEntity.ok(dto);
-        } catch (ConstraintViolationException e) {
+        } catch (InvalidReferenceIdException | ConstraintViolationException e) {
             return ResponseEntity.unprocessableEntity().build();
         }
     }
@@ -76,7 +77,7 @@ abstract public class AbstractRestController<
         Optional<T> ot = service.findById(id);
 
         if (ot.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.unprocessableEntity().build();
         }
 
         T t = ot.get();

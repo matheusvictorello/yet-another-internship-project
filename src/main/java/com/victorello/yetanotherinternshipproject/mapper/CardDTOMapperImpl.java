@@ -3,6 +3,7 @@ package com.victorello.yetanotherinternshipproject.mapper;
 import com.victorello.yetanotherinternshipproject.domain.Card;
 import com.victorello.yetanotherinternshipproject.domain.Task;
 import com.victorello.yetanotherinternshipproject.dto.CardDTO;
+import com.victorello.yetanotherinternshipproject.mapper.exceptions.InvalidReferenceIdException;
 import com.victorello.yetanotherinternshipproject.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class CardDTOMapperImpl extends AbstractDTOMapperImpl<Card, CardDTO> impl
     @Override
     public Card fromDTO(CardDTO dto) {
         Optional<Task> optionalTask = taskService.findById(dto.getTaskId());
-        if (optionalTask.isEmpty()) return null;
+        if (optionalTask.isEmpty()) throw new InvalidReferenceIdException();
         Task task = optionalTask.get();
 
         Card card = new Card();
