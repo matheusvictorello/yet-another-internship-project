@@ -9,7 +9,7 @@ import java.util.Optional;
 abstract public class AbstractServiceImpl<T extends AbstractEntity, DAO extends AbstractDAO<T>> implements AbstractService<T, DAO> {
 
     @Autowired
-    private DAO dao;
+    protected DAO dao;
 
     @Override
     public void save(T t) {
