@@ -5,6 +5,7 @@ import com.victorello.yetanotherinternshipproject.dto.AbstractDTO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface AbstractDTOMapper<T extends AbstractEntity, DTO extends AbstractDTO<T>> {
 
@@ -16,4 +17,7 @@ public interface AbstractDTOMapper<T extends AbstractEntity, DTO extends Abstrac
 
     List<T> fromDTO(List<DTO> dtos);
     List<DTO> toDTO(List<T> ts);
+
+    Set<T> fromDTO(Set<DTO> dtos);
+    Set<DTO> toDTO(Set<T> ts);
 }

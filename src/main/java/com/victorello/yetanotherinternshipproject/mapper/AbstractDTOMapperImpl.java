@@ -5,6 +5,8 @@ import com.victorello.yetanotherinternshipproject.dto.AbstractDTO;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 abstract public class AbstractDTOMapperImpl<T extends AbstractEntity, DTO extends AbstractDTO<T>> implements AbstractDTOMapper<T, DTO> {
 
@@ -32,5 +34,15 @@ abstract public class AbstractDTOMapperImpl<T extends AbstractEntity, DTO extend
     @Override
     public List<DTO> toDTO(List<T> ts) {
         return ts.stream().map(this::toDTO).toList();
+    }
+
+    @Override
+    public Set<T> fromDTO(Set<DTO> dtos) {
+        return dtos.stream().map(this::fromDTO).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<DTO> toDTO(Set<T> ts) {
+        return ts.stream().map(this::toDTO).collect(Collectors.toSet());
     }
 }
