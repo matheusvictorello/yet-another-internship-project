@@ -27,7 +27,7 @@ public class CardDTOMapperImpl extends AbstractDTOMapperImpl<Card, CardDTO> impl
         card.setName(dto.getName());
         card.setTask(task);
 
-        return null;
+        return card;
     }
 
     @Override
