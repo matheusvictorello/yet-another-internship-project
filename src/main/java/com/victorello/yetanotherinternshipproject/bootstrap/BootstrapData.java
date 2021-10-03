@@ -27,7 +27,7 @@ public class BootstrapData implements CommandLineRunner {
 
     private List<User>    userList;
     private List<Project> projectList;
-    private List<Task> taskList;
+    private List<Task>    taskList;
     private List<Card>    cardList;
 
     @Override
@@ -48,6 +48,34 @@ public class BootstrapData implements CommandLineRunner {
 
                 for (int k = 0; k < 2; k++) {
                     Card card = new Card("card_" + i + "_" + j + "_" + k, task);
+                    cardDAO.save(card);
+                    cardList.add(card);
+                }
+
+                taskDAO.save(task);
+            }
+
+            projectDAO.save(project);
+        }
+
+        userDAO.save(user);
+
+        user = new User("bob");
+        userDAO.save(user);
+        userList.add(user);
+
+        for (int i = 0; i < 2; i++) {
+            Project project = new Project("project_" + i + 39, user);
+            projectDAO.save(project);
+            projectList.add(project);
+
+            for (int j = 0; j < 10; j++) {
+                Task task = new Task("task_" + i  + 39 + "_" + j + 22, project);
+                taskDAO.save(task);
+                taskList.add(task);
+
+                for (int k = 0; k < 2; k++) {
+                    Card card = new Card("card_" + i  + 39 + "_" + j  + 22 + "_" + k + 11, task);
                     cardDAO.save(card);
                     cardList.add(card);
                 }
