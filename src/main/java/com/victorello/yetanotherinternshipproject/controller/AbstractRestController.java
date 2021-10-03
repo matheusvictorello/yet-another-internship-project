@@ -11,8 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ConstraintViolationException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -31,11 +33,11 @@ abstract public class AbstractRestController<
     protected MAPPER mapper;
 
     @GetMapping("")
-    public ResponseEntity<Iterable<DTO>> getAll() {
-        List<DTO> dtos = StreamSupport
+    public ResponseEntity<Set<DTO>> getAll() {
+        Set<DTO> dtos = StreamSupport
                 .stream(service.findAll().spliterator(), false)
                 .map(mapper::toDTO)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
         return ResponseEntity.ok(dtos);
     }
 
@@ -54,6 +56,28 @@ abstract public class AbstractRestController<
             service.save(t);
             dto = mapper.toDTO(t);
             return ResponseEntity.ok(dto);
+        } catch (InvalidReferenceIdException | ConstraintViolationException e) {
+            e.printStackTrace();
+            return ResponseEntity.unprocessableEntity().build();
+        }
+    }
+
+    @PostMapping("/find")
+    public ResponseEntity<Set<DTO>> findAllById(@RequestBody List<Long> ids) {
+        try {
+            Set<DTO> dtoSet = new HashSet<>();
+
+            for (Long id : ids) {
+                Optional<T> optionalT = service.findById(id);
+
+                if (optionalT.isEmpty()) return ResponseEntity.unprocessableEntity().build();
+                T t = optionalT.get();
+                DTO dto = mapper.toDTO(t);
+
+                dtoSet.add(dto);
+            }
+
+            return ResponseEntity.ok(dtoSet);
         } catch (InvalidReferenceIdException | ConstraintViolationException e) {
             return ResponseEntity.unprocessableEntity().build();
         }
