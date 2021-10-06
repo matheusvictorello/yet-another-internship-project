@@ -32,7 +32,7 @@ public class BootstrapData implements CommandLineRunner {
 
     @Override
     public void run(String ...args) {
-        User user = new User("matheus");
+        User user = new User("matheus", "default");
         userDAO.save(user);
         userList.add(user);
 
@@ -60,7 +60,7 @@ public class BootstrapData implements CommandLineRunner {
 
         userDAO.save(user);
 
-        user = new User("bob");
+        user = new User("bob", "default");
         userDAO.save(user);
         userList.add(user);
 

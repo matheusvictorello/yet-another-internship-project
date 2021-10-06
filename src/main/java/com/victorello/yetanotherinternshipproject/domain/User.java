@@ -22,12 +22,20 @@ public class User extends AbstractEntity {
     @Setter
     private String name;
 
+    @NotNull
+    @NotEmpty
+    @Column()
+    @Getter
+    @Setter
+    private String password;
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     @Getter
     @Setter
     private Set<Project> projectSet = new HashSet<>();
 
-    public User(String name) {
+    public User(String name, String password) {
         this.name = name;
+        this.password = password;
     }
 }
